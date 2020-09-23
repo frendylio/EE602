@@ -1,0 +1,291 @@
+\documentclass[11pt]{article}
+\usepackage{scribe}
+\usepackage{graphicx}
+
+% Uncomment the appropriate line
+%\Scribe{Your name}
+
+\Scribes{Frendy Lio Can}
+\LectureDate{September 23, 2020}
+\LectureTitle{Algorithms Assignment 4}
+
+%\usepackage[mathcal]{euscript}
+
+
+\begin{document}
+
+\MakeScribeTop
+
+%\paragraph{This is a paragraph heading} Paragraph.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{\noindent\textbf{\LARGE{Problem 1}}}
+
+% Start of Explaining
+
+\begin{flushleft}
+    To prove this, we have to show that there exists constants $c_1, c_2, n_0 > 0$ such that 
+    $0 \leq c_1 n^b \leq (n + a)^b \leq c_2 n^b$ , $\forall n \geq n_0 $. 
+    \newline \newline
+    We also can observe that $n + a \leq 2n$ , when $|a| \leq n$; and $n + a \geq \frac{1}{2}n$ , when $|a| \leq \frac{n}{2}$.
+    \newline \newline
+    Thus, if $n \geq 2|a|$
+\end{flushleft}   
+\begin{equation*}
+\begin{split}
+     & 0 \leq \frac{n}{2} \leq n + a \leq 2n \Leftrightarrow \\
+     \Leftrightarrow \quad & 0^b \leq \frac{n}{2}^b \leq (n + a)^b \leq (2n)^b , \quad b > 0 \\
+    \Leftrightarrow \quad & 0 \leq 2^{-b} n^b \leq (n + a)^n \leq 2^b n^b
+\end{split}
+\end{equation*}
+\begin{flushleft}
+    $\therefore{} \quad (n+a)^b = \Theta(n^b) \quad \because \quad \exists c_1, c_2, n_0 : c_1 = 2^{-b}, c_2 = 2^b, n_0 = 2|a|$ \quad when $b > 0$
+\end{flushleft}   
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{\noindent\textbf{\LARGE{Problem 2}}}
+
+\begin{flushleft}
+    Yes, $2^{n+1} =  O(2^n)$ and $2^2n \neq O(2^n).$ \newline\newline
+    For $2^{n+1} =  O(2^n)$
+    \newline
+
+    Assume that $2^{n+1} =  O(2^n)$. Thus, we need to prove that there exists constants $c, n_0 > 0 $ such that $0 \leq 2^{n+1} \leq c 2^n \quad ,\forall n \geq n_0.$
+    We can observe that 
+    $0 \leq 2^{n+1} \leq c 2^n \Leftrightarrow 0 \leq 2 \cdot 2^n \leq c 2^n$.
+    \newline \newline
+    Clearly, we can observe that there exists constants $c, n_0 > 0$ such that $c_0 \geq 2, n \geq 1$. Therefore $2^{n+1} =  O(2^n)$.
+    \newline\newline
+    For $2^2n \neq O(2^n)$
+    \newline
+
+    Assume that $2^2n = O(2^n)$. Thus, we need to prove that there exists constants $c, n_0 > 0 $ such that $0 \leq 2^{2n} \leq c 2^n \quad ,\forall n \geq n_0.$
+    We can observe that 
+    $0 \leq 2^{2n} \leq c 2^n \Leftrightarrow 0 \leq 2^n \cdot 2^n \leq c 2^n$.
+    \newline \newline
+    Clearly, we can observe that there does not exists any constants $c$ when $n \rightarrow \infty$. This contradicts the assumption $2^2n = O(2^n)$. Therefore, we can conclude that $2^2n \neq O(2^n)$
+    \newline
+\end{flushleft}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{\noindent\textbf{\LARGE{Problem 3}}}
+
+\begin{flushleft}
+    If $T(n) = O(n^2)$, there must exists constants $c, n_0 > 0$ such that $ T(n) \leq cn^2, \quad \forall   n \geq n_0$.
+\end{flushleft}
+\begin{equation*}
+\begin {split}
+    T(n) = T(n-1) + n &\leq c(n-1)^2 + n    \\
+    &\leq cn^2 - 2cn + 1 + n \\
+    &\leq cn^2 + (-2c + 1)n + 1 \\
+    &\leq cn^2 + (-2c + 1)n \\
+    &\leq cn^2 - 2cn \\
+    &\leq cn^2
+\end {split}
+\end{equation*}
+\begin{flushleft}
+    We can observe that for $n \rightarrow \infty$ and $c \geq 1$, \quad $T(n) \leq cn^2$. Therefore, $T(n) = O(n^2)$ .
+\end{flushleft}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{\noindent\textbf{\LARGE{Problem 4}}}
+
+\begin{flushleft}
+    Recursion tree:    
+\end{flushleft}
+
+\Tree [.$cn$
+        [.$c\alpha n$ 
+          [.$c\alpha^2n$ 
+              [.$\vdots$ ] 
+          ] 
+          [.$c(1-\alpha)\alpha n$ 
+              [.$\vdots$ ] 
+          ] 
+        ] 
+        [.$c(1-\alpha)n$
+          [.$c(1-\alpha)\alpha n$ 
+              [.$\vdots$ ] 
+          ] 
+          [.$c(1-\alpha)^2n$
+              [.$\vdots$ ] 
+          ] 
+        ] 
+      ] 
+\Tree 
+[.$cn$
+  [.$cn$
+    [.$cn$
+      [.$\vdots$ ] 
+    ]  
+  ] 
+]
+\begin{flushleft}
+    We can observed that $f(n) = cn$, $a = c$ and $b = 1/(1- \alpha)$.
+    \newline
+    
+    Therefore, in order to calculate the lower bound, we add the cost of each level of the tree by knowing that the tree is completed when the Recursion tree level is $log_b n$:
+\end{flushleft}
+\begin{equation*}
+\begin {split}
+    T(n) =& \sum_{j = 0}^{log_b \cdot n} f(n) \\
+         =& \sum_{j = 0}^{log_b \cdot n} cn \\
+         =& \sum_{j = 1}^{log_b \cdot n} cn + cn \\
+         \geq & n log_b n \\
+         \geq & n lg n \\
+    \therefore{} T(n) = &\Omega(n lg n)
+\end {split}
+\end{equation*}
+\begin{flushleft}
+    In order to calculate the upper bound, we assume that there exists a constant b such that $T(n) \leq b \cdot n \cdot lgn$.
+    \newline
+
+    Thus, the upper bound is:
+\end{flushleft}
+\begin{equation*}
+\begin {split}
+    T(n) =& T(\alpha n) + T((1 - \alpha)n) + cn \\
+        \leq & b (\alpha  n) \cdot lg(\alpha n) + b[(1-\alpha)n] \cdot lg[(1 - \alpha)n] + cn \\
+        \leq & [b\alpha n lg \alpha + b\alpha n lg n] + [b(1-\alpha)n lg(1 - \alpha) + b(1 - \alpha) n lg n] + cn \\
+        \leq & bnlgn + bn(\alpha lg \alpha + (1- \alpha) lg (1-\alpha)) + cn \\
+        \leq & bnlgn 
+\end {split}
+\end{equation*}
+\begin{flushleft}
+    We can apply the same logic and find the lower bound which is:
+\end{flushleft}
+\begin{equation*}
+\begin {split}
+    T(n)    \geq & bnlgn 
+\end {split}
+\end{equation*}
+\begin{flushleft}
+    We can conclude that $T(n)=\Theta(nlgn)$, for any $n \geq n_0$ and $c \geq -b(\alpha lg \alpha + (1- \alpha) lg(1 - \alpha))$.
+\end{flushleft}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{\noindent\textbf{\LARGE{Problem 5}}}
+
+\begin{flushleft}
+    % =============================
+   a) $T(n) = 2T(\frac{n}{2}) + n^3$
+    \newline
+
+   We have $a = 2, b = 2, f(n) = n^3$ and $n^{log_ba} = n^{log_22}= n$. 
+   We can observe that case 3 of the master method applies since $f(n) = \Omega(n^{log_ba+\epsilon}), \epsilon = 3$. 
+    \newline
+
+   Therefore, $T(n) = \Theta(n^3)$.
+    \newline
+
+ % =============================
+    b) $T(n) = T(\frac{9n}{10}) + n$
+    \newline
+
+   We have $a = 1, b = 10/9, f(n) = n$ and $n^{log_{10/9}1} = n^0= 1$. 
+   We can observe that case 3 of the master method applies since $f(n) = \Omega(n^{log_ba+\epsilon}), \epsilon = 1$. 
+    \newline
+
+   Therefore, $T(n) = \Theta(n)$.    
+   \newline
+ % =============================
+
+    c) $T(n) = 16T(\frac{n}{4}) + n^2$
+    \newline
+
+   We have $a = 16, b = 4, f(n) = n^2$ and $n^{log_{4}16} = n^2$. 
+   We can observe that case 2 of the master method applies since $f(n) = \Theta(n^{log_ba})$. 
+    \newline
+
+   Therefore, $T(n) = \Theta(n^{log_ba}lgn) = \Theta(n^{2}lgn)$.    
+   \newline
+ % =============================
+
+ d) $T(n) = 7T(\frac{n}{3}) + n^2$
+ \newline
+
+We have $a = 7, b = 3, f(n) = n^2$ and $n^{log_{3}7} = n^{1.77}$. 
+We can observe that case 3 of the master method applies since $f(n) = \Omega(n^{log_ba+\epsilon}), \epsilon \approx 0.23$. 
+ \newline
+
+Therefore, $T(n) = \Theta(n^2)$.    
+\newline
+ % =============================
+
+ e) $T(n) = 7T(\frac{n}{2}) + n^2$
+ \newline
+
+We have $a = 7, b = 2, f(n) = n^2$ and $n^{log_{2}7} = n^{2.81}$. 
+We can observe that case 1 of the master method applies since $f(n) = \Omega(n^{log_ba-\epsilon}), \epsilon \approx 0.81$. 
+ \newline
+
+Therefore, $T(n) = \Theta(n^{log_ba}) = \Theta(n^{log_27})$.    
+\newline
+ % =============================
+
+ f) $T(n) = 2T(\frac{n}{4}) + n^{1/2}$
+ \newline
+
+We have $a = 2, b = 4, f(n) = n^{1/2}$ and $n^{log_{4}2} = n^{1/2}$. 
+We can observe that case 2 of the master method applies since $f(n) = \Omega(n^{log_ba})$. 
+ \newline
+
+Therefore, $T(n) = \Theta(n^{log_42}lgn)$.    
+\newline
+ % =============================
+
+ g) $T(n) = T(n - 1) + n$
+\end{flushleft}
+\begin{equation*}
+    \begin{split}
+    T(n) = &T(n - 1) + n \\
+    T(n-1) = &T(n - 2) + n - 1 \\
+    T(n-2) = &T(n - 3) + n - 2
+\end{split}
+\end{equation*}
+Therefore,
+\begin{equation*}
+\begin{split}
+    T(n) = &T(n - 1) + n = T(n - 2) + n - 1 + n = T (n - 3) + n - 2 + n - 1 + n \\
+    T(n) = &T(n - k) + kn - k(k-1)/2
+\end{split}
+\end{equation*}
+Thus, if our base case for $T(1)$ is $n-k = 1 \Rightarrow k = n - 1$. Thus, 
+\begin{equation*}
+\begin{split}
+    T(n) = &T(1) + (n - 1)n - \frac{(n - 1)(n -2)}{2}
+\end{split}
+\end{equation*}
+We can clearly observed that it has complexity $\Theta(n^2)$.
+
+\begin{flushleft}
+ % =============================
+
+ h) $T(n) = T(n^{1/2}) + 1$
+ \newline
+
+ Let $n = 2^m$. Thus, $T(2^m) = T(2^{m \cdot 1/2}) + 1$. Assume tht $T(2^m) = S(m)$ where S is some function of m.
+ \newline
+
+ Thus, $S(m) = S(m/2) + 1$
+ \newline
+
+We have $a = 1, b = 2, f(n) = 1$ and $n^{log_{2}1} = 1$. 
+We can observe that case 2 of the master method applies since $f(n) = \Omega(1)$. 
+ \newline
+
+Therefore, $S(m) = \Theta(lgm)$. Thus, since $n = 2^m \Rightarrow lg n = m$, $T(n) = \Theta(lg (lg n))$    
+\newline
+
+\end{flushleft}
+
+\end{document}

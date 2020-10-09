@@ -1,0 +1,171 @@
+\documentclass[11pt]{article}
+\usepackage{scribe}
+\usepackage{graphicx}
+
+% Uncomment the appropriate line
+%\Scribe{Your name}
+
+\Scribes{Frendy Lio Can}
+\LectureDate{October 10, 2020}
+\LectureTitle{Algorithms Assignment 6}
+
+%\usepackage[mathcal]{euscript}
+
+
+\begin{document}
+\MakeScribeTop
+
+%\paragraph{This is a paragraph heading} Paragraph.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{\noindent\textbf{\LARGE{Problem 1}}}
+
+% Start of Explaining
+
+\begin{flushleft}
+    A heap is a nearly complete binary tree where all the levels, except for the lowest,
+    are completely full. We can conclude that a heap has a minimum of $2^h$ and a maximum of $2^{h+1} - 1$ elements,
+    where h represents the height of the tree.
+    \newline
+    \newline
+    Therefore, $2^{h} \leq n \leq 2^{h+1} - 1 \Rightarrow h \leq lg n \leq h + 1$. Thus, since the 
+    height of a tree is an integer. We can conclude that $h = \floor{lg n} $.
+
+\end{flushleft}   
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{\noindent\textbf{\LARGE{Problem 2}}}
+
+\begin{flushleft}
+    A max-heap is a complete binary tree in which the value in each internal node is greater
+    than or equal to the values in the children of that node.
+    \newline
+    \newline
+    Thus, if the root of the subtree does not contain the largest value occurring anywhere in the subtree, the 
+    heap property will be violated. Therefore, the root of a subtree will always be the highest value in that tree.
+\end{flushleft}  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{\noindent\textbf{\LARGE{Problem 3}}}
+
+\begin{flushleft}
+    Lets show this by doing a proof by induction.
+    \newline
+    \newline
+    Base case:
+    \newline
+    Lets show that it is true for $h=0$. Since the number of nearly complete binary tree is 
+    $\ceil{\frac{n}{2}}$. Thus, it is true for $h=0$.
+    \newline
+    \newline
+    Inductive Step:
+    \newline
+    Assume that is true for $h-1$. Let $N_h$ be the number of nodes of height $h$ induction
+    the $n-node$ tree $T_1$. 
+    
+    Let $T_2$ be a tree that is made by removing the leaves of $T_1$. This implies that $n_2 = n_1 - \ceil{\frac{n_1}{2}} = \ceil{\frac{n_1}{2}}$.
+    This implies that the height in $T_2 = h - 1$
+
+    Let $N_2$ denote the number of nodes at height $h-1$ in $T_2$. Thus, by induction, we conclude the following:
+    \newline
+    \newline
+    $N_h = N_2 = \ceil{\frac{n_2}{2^h}} = \ceil{\frac{\frac{n_1}{2}}{2^h}} = \ceil{\frac{n_1}{2^{h+1}}}$.
+    \newline
+    \newline
+    Therefore, there are at most $\ceil{\frac{n}{2^{h+1}}}$ nodes of height h in any n-element heap.
+\end{flushleft}  
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{\noindent\textbf{\LARGE{Problem 4}}}
+
+\begin{flushleft}
+    It is $\Theta(n^2)$ because the partition in QUICKSORT will always happen at the end of the array. 
+    Thus, this QUICKSORT will always behave as worst-case.
+\end{flushleft}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{\noindent\textbf{\LARGE{Problem 5}}}
+
+\begin{flushleft}
+    The reason why we analyze the expected running time of a randomized algorithm is because
+    it represents a more typical representation of the time cost for a randomized algorithm.
+    \newline
+    \newline
+    This can be explained as a randomized algorithm will act different each time it is executed. 
+    Thus, instead of calculating the best-case or worst-case running-time, we calculate the average
+    as every time we run the algorithm, the running time will be different.
+\end{flushleft}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 6
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{\noindent\textbf{\LARGE{Problem 6}}}
+
+\begin{flushleft}
+    The best-case running time of QUICKSORT happens when the partitions sizes are equal or are within 1 of each other.
+    \newline
+    \newline
+    The partition sizes are equal when the array has an odd number of elements and the pivot is right in the middle after each partitioning.
+    This implies that each partition has $(n-1)/2$ elements.
+    \newline
+    \newline
+    The partition sizes are 1 of each other when the array has an even number and one partition has $n/2$ elements while the other has $n/2 - 1$.
+    \newline
+    \newline
+    For both of these cases, we can conclude that at most $n/2$ elements are in each partition. Therefore we can draw the recursion tree:
+\end{flushleft}
+\Tree [.$n$
+        [.$\leq \frac{n}{2}$ 
+          [.$\leq \frac{n}{4}$ 
+              [.$\vdots$ ] 
+          ] 
+          [.$\leq \frac{n}{4}$ 
+              [.$\vdots$ ] 
+          ] 
+        ] 
+        [.$\leq \frac{n}{2}$
+          [.$\leq \frac{n}{4}$ 
+              [.$\vdots$ ] 
+          ] 
+          [.$\leq \frac{n}{4}$
+              [.$\vdots$ ] 
+          ] 
+        ] 
+      ] 
+\Tree 
+[.$cn$
+  [.$2*c\frac{n}{2}=cn$
+    [.$4*c\frac{n}{4}=cn$
+      [.$\vdots$ ] 
+    ]  
+  ] 
+]
+
+\begin{flushleft}
+    We can observed that $f(n) = cn$, $a = 1$ and $b = 2$.
+    \newline
+    
+    Therefore, in order to calculate the lower bound, we add the cost of each level of the tree by knowing that the tree is completed when the Recursion tree level is $log_b n = lg n$:
+\end{flushleft}
+\begin{equation*}
+    \begin {split}
+        T(n) =& \sum_{j = 0}^{lg \cdot n} f(n) \\
+             =& \sum_{j = 0}^{lg \cdot n} cn \\
+             =& \sum_{j = 1}^{lg \cdot n} cn + cn \\
+             \geq & n lg n \\
+        \therefore{} T(n) = &\Omega(n lg n)
+    \end {split}
+    \end{equation*}
+
+\end{document}

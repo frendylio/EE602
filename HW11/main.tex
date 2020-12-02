@@ -1,0 +1,213 @@
+\documentclass[11pt]{article}
+\usepackage{scribe}
+\usepackage{graphicx}
+
+% Uncomment the appropriate line
+%\Scribe{Your name}
+
+\Scribes{Frendy Lio Can}
+\LectureDate{November 28, 2020}
+\LectureTitle{Algorithms Assignment 11}
+
+%\usepackage[mathcal]{euscript}
+
+
+\begin{document}
+\MakeScribeTop
+
+%\paragraph{This is a paragraph heading} Paragraph.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{\noindent\textbf{\LARGE{Problem 1}}}
+
+% Start of Explaining
+
+\begin{flushleft}
+    To prove the initial condition, we do the following: $n = 0 \Rightarrow T(0)=2^0 = 1$.
+    \newline
+    For $n > 0, T(n) = 1 + \sum_{j = 0}^{n - 1}T(j) = 1 + \sum_{j = 0}^{n - 1}2^j = 1 + (2^n - 1) = 2^n$
+\end{flushleft}   
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{\noindent\textbf{\LARGE{Problem 2}}}
+
+\begin{flushleft}
+Algorithm(p,n,c) \newline \null
+    \quad let r[n] be a new array with size n \newline \null
+    \quad r[0] = 0 \newline \null
+    \quad for j = 1 to n \newline \null
+        \quad \quad q = p[j] \newline \null
+        \quad \quad for i = 1 to j - 1 \newline \null
+            \quad \quad \quad q = max(q, p[i] + r[j - i] - c) \newline \null
+        \quad \quad r[j] = q \newline \null
+    \quad return r[n]
+\end{flushleft} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{\noindent\textbf{\LARGE{Problem 3}}}
+
+\begin{flushleft}
+    Let the vertices of the subproblem graph be the ordered pairs $v_{ij}$ such that $i \leq j$.
+    If $i = j$ ,then there are no edges out of $v_{ij}$. If $i < j$, then for every k such that $i \leq k \leq j$,
+    the subproblem graph contain edges $(v_{ij}, v_{ik})$ and $(v_{ij}, v_{i+1,j})$.
+    \newline
+    \newline
+    Therefore, in order to solve the subproblem of optimally parenthesizing the product of $A_i$ to $A_j$, we will need to solve
+    subproblem of optimal parenthesizing the products $A_i$ to $A_k$ and $A_{k+1}$ to $A_j$.
+    \newline
+    \newline
+    Number of vertices: $\sum_{i=1}^n \sum_{j=1}^n 1= \frac{n(n+1)}{2}$
+    \newpage
+    Number of edges: 
+\end{flushleft}
+\begin{equation*}
+\begin {split}
+    \sum_{i=1}^n \sum_{j=1}^n (j - i) =& \sum_{i = 1}^n \sum_{a = 0}^{n-i}t \text{\quad , a = j - i}\\
+    =& \sum_{i = 1}^n \frac{(n-i)(n-i+1)}{2}\\
+    =& \frac{1}{2}\sum_{i = 1}^n (n-i)(n-i+1)\\
+    =& \frac{1}{2}\sum_{r = 0}^{n-1} (r^2 + r) \text{\quad ,r = n - i}\\
+    =& \frac{1}{2}(\frac{(n-1)n(2n-1)}{6} + \frac{(n-1)n}{2}) \\
+    =& \frac{(n-1)n(n+1)}{6}
+\end {split}
+\end{equation*}
+\begin{flushleft}
+    Edges: $(v_{ij}, v_{ik})$ and $(v_{ij}, v_{i+1,j})$
+\end{flushleft}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{\noindent\textbf{\LARGE{Problem 4}}}
+
+\begin{flushleft}
+    Let $a$ be an activity array. \newline
+    Let $c$ be an array that storages the sizes. \newline
+    Let $s$ be an array of the start time of the activities. \newline
+    Let $f$ be an array of the finish time of the activities. \newline
+    Let $n$ be the size of the original problem \newline \newline
+DynamicActivitySelection(s,f,n) \newline \null
+    \quad let $c$ and $a$ be a 2d array of size $(n+1) x (n+1)$ \newline \null
+    \quad for i in [0 ... n] \newline \null
+        \quad \quad c[i,i] = 0 \newline \null
+        \quad \quad c[i,i+1] = 0 \newline \null
+    \quad c[n+1, n+1]= 0 \newline \null
+    \quad for l in [2 ... n + 1] \newline \null
+        \quad \quad for i in [0 ... n - l + 1] \newline \null
+            \quad \quad \quad j = i + 1 \newline \null
+            \quad \quad \quad c[i,j] = 0 \newline \null
+            \quad \quad \quad k = j - 1 \newline \null
+            \quad \quad \quad while f[i] < f[k] \newline \null
+                \quad \quad \quad \quad  if (
+                    f[i] $\leq$ s[k] AND 
+                    f[k] $\leq$ s[j] AND
+                    c[i,k] + c[k,j] + 1 > c[i.j]
+                    ) \newline \null
+                    \quad \quad \quad \quad \quad c[i,j] = c[i,k] + c[k,j] + 1 \newline \null
+                    \quad \quad \quad \quad \quad a[i,j] = k \newline \null
+                \quad \quad \quad \quad k = k - 1 \newline \null
+    \quad print "The maximum size set of mutually compatible activities has size:" c[0, n+1] \newline \null
+    \quad print "The set contains:" PrintActivities(c, a, i, j) \newline \null
+PrintActivities(c, a, i, j) \newline \null
+    \quad if[i, j] > 0 \newline \null
+        \quad \quad k = a[i, j] \newline \null
+        \quad \quad print k \newline \null
+        \quad \quad PrintActivities(c, a, i, kj) \newline \null
+        \quad \quad PrintActivities(c, a, k, j) \newline \null
+
+\end{flushleft}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{\noindent\textbf{\LARGE{Problem 5}}}
+
+\begin{flushleft}
+If we choose the last activity to start  that is compatible with all previously selected activities; the algorithm is similar to selecting the first activity to finish.
+The only difference it that when we do last activity to start, the algorithm will be running in reverse. Thus, since 
+they are similar, it will produce an optimal solution. 
+\newline 
+\newline
+This approach is a greedy algorithm because at each step we make the best choice.
+\end{flushleft}    
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 6
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{\noindent\textbf{\LARGE{Problem 6}}}
+\begin{flushleft}
+
+\end{flushleft}    
+    
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 7
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{\noindent\textbf{\LARGE{Problem 7}}}
+\begin{flushleft}
+    For every stack operation, we add to our cost the actual cost of a stack operation and the cost of copying an element.
+    This implies that for every stack operation, we add 2 times to the cost.
+    \newline
+    \newline
+    We also know that the size of stack will not exceed k, and there are always k operations between backups; 
+    we will overpay by at least enough cost. 
+    Therefore, the amortized cost of the operation is constant, and the cost of the n operation is $O(2n) = O(n)$
+\end{flushleft}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 8
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{\noindent\textbf{\LARGE{Problem 8}}}
+\begin{flushleft}
+    Using the INCREMENT Algorithm from page (454) from CLRS.
+    \newline
+    \newline
+    Let high be a global variable that is initialize at $-\infty$.
+    \newline
+    \newline
+    INCREMENT(A) \newline \null
+        \quad i = 0 \newline \null
+        \quad while i < A.length and A[i] == 1 \newline \null
+            \quad \quad A[i] = 0 \newline \null
+            \quad \quad i = i + 1 \newline \null
+        \quad if i < A.length \newline \null
+            \quad \quad A[i] = 1 \newline \null
+            \quad \quad if i > high \newline \null
+                \quad \quad \quad high = 1
+    \newline
+    \newline
+    RESET(A) \newline \null
+        \quad while high > 0 \newline \null
+            \quad \quad A[high] = 0 \newline \null
+            \quad \quad high = high - 1 \newline \null
+        \quad A[high] = 0
+    \newline
+    \newline
+    We can observe that INCREMENT(A) and RESET(A) operations will take $O(1)$ time by the accounting method.
+    This is because when a bit is set to 1, we carry a cost of 1. This cost or bit can be used in the RESET operation as well which will take $O(1)$ time.
+    \newline
+    \newline
+    Therefore, the amortized cost is $O(n)$ which implies that the total cost is also $O(n)$.
+\end{flushleft}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 9
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{\noindent\textbf{\LARGE{Problem 9}}}
+\begin{flushleft}
+    If $\phi(D_i)  = \sum_{k = 1}^i lg k$, this implies that the amortized cost for INSERT is 
+    $\hat{c_i} = c_i + \phi(D_i) - \phi(D_i - 1) \leq lg i + \sum_{k=1}^i lg k - \sum_{k=1}^{i-1}lg k = 2 lg i \rightarrow O(lgn)$.
+    \newline
+    \newline
+    The amortized cost for EXTRACT-MIN will be 
+    $\hat{c_i} = c_i + \phi(D_i) - \phi (D_i -1) \leq lg 1 + 1 + \sum_{k=1}^{i-1} lg k - \sum_{k=1}^i lg k = 1 \rightarrow O(1)$
+\end{flushleft}
+
+
+\end{document}
+
+
